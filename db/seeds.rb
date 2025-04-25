@@ -7,3 +7,5 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+# filepath: /home/loki/apps/store/db/seeds.rb
+User.create!(email_address: 'admin@example.com', password: 'password', password_confirmation: 'password')
