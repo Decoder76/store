@@ -8,4 +8,14 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # filepath: /home/loki/apps/store/db/seeds.rb
-User.create!(email_address: 'admin@example.com', password: 'password', password_confirmation: 'password')
+
+# Ensure the existence of an admin user
+User.find_or_create_by!(email_address: 'admin@example.com') do |user|
+  user.password = 'password'
+  user.password_confirmation = 'password'
+end
+
+# Add 50 fake products using the Faker gem
+50.times do
+  Product.create!(name: Faker::Commerce.product_name)
+end

@@ -1,0 +1,21 @@
+<h1>Dashboard</h1>
+
+<% if @current_user %>
+  <p>Welcome, <%= @current_user.email %>!</p>
+<% else %>
+  <p>You are not logged in.</p>
+<% end %>
+
+<h2>Recent Products</h2>
+<ul>
+  <% if @products.present? %>
+    <% @products.each do |product| %>
+      <li><%= link_to product.name, product_path(product) %></li>
+    <% end %>
+  <% else %>
+    <li>No products available.</li>
+  <% end %>
+</ul>
+
+<%= link_to "Manage Products", products_path, class: "btn btn-primary" %>
+<%= link_to "Manage Sessions", sessions_path, class: "btn btn-secondary" %>

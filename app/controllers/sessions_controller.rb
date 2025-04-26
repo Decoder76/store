@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email_address: params[:email]) # or just `email` if alias is used
     if user&.authenticate(params[:password])
+      start_new_session_for(user)
       session[:user_id] = user.id
       redirect_to root_path, notice: "Logged in successfully."
     else
