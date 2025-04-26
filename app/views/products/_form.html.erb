@@ -1,11 +1,10 @@
-<%= form_with model: product do |form| %>
-    <div>
-      <%= form.label :name %>
-      <%= form.text_field :name %>
+<%= form_with model: product, html: { class: 'product-form styled-form' } do |form| %>
+    <div class="form-group">
+      <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
     </div>
-  
-    <div>
-      <%= form.submit %>
+
+    <div class="form-actions">
+      <%= form.submit 'Save Product', class: 'btn btn-primary' %>
     </div>
 <% end %>
-  

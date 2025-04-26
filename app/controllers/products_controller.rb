@@ -1,7 +1,9 @@
 class ProductsController < ApplicationController
-before_action :set_product, only: [ :show, :edit, :update, :destroy ]
+  allow_unauthenticated_access only: %i[index show]
+  before_action :set_product, only: [ :show, :edit, :update, :destroy ]
+  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
 
-rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   # GET /products
   def index
@@ -72,7 +74,7 @@ rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
     # It finds the product by its ID and assigns it to the @product instance variable.
     # The find method raises an ActiveRecord::RecordNotFound exception if the record is not found.
     def set_product
-Rails.logger.debug { "set_product called with params[:id]: #{params[:id]}" }
+      Rails.logger.debug { "set_product called with params[:id]: #{params[:id]}" }
       @product = Product.find(params[:id])
     end
 

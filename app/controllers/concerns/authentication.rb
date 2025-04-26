@@ -21,6 +21,9 @@ module Authentication
       resume_session || request_authentication
     end
 
+    # Alias authenticate_user! to require_authentication for compatibility
+    alias_method :authenticate_user!, :require_authentication
+
     def resume_session
       Current.session ||= find_session_by_cookie
     end
