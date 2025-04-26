@@ -1,7 +1,26 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  id: 1
+  name: "Sample Product"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
 
 two:
-  name: MyString
+  id: 2
+  name: "Another Product"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+three:
+  id: 3
+  name: "Third Product"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+  
+four:
+  id: 4
+  name: "Fourth Product"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+

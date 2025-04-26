@@ -1,14 +1,9 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+before_action :set_product, only: [ :show, :edit, :update, :destroy ]
+
+rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   # GET /products
-  # GET /products.json
-  # GET /products.xml
-  # GET /products.html
-  # GET /products.txt
-  # GET /products.csv
-  # GET /products.rss
-  # GET /products.atom
   def index
     # The index action is used to display a list of all products.
     # It retrieves all products from the database and assigns them to the @products instance variable.
@@ -33,7 +28,7 @@ class ProductsController < ApplicationController
     # If the product is successfully saved to the database, it redirects to the show action for that product.
     @product = Product.new(product_params)
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      redirect_to @product, notice: "Product was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -49,9 +44,9 @@ class ProductsController < ApplicationController
   def update
     # The update action is used to handle the form submission for updating an existing product.
     # It retrieves the product from the database using the ID passed in the URL.
-    
+
     if @product.update(product_params)
-      redirect_to @product, notice: 'Product was successfully updated.'
+      redirect_to @product, notice: "Product was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -62,7 +57,7 @@ class ProductsController < ApplicationController
     # It retrieves the product from the database using the ID passed in the URL.
     # The product is then destroyed, and the user is redirected to the index action.
     @product.destroy
-    redirect_to products_url, notice: 'Product was successfully destroyed.'
+    redirect_to products_url, notice: "Product was successfully destroyed."
   end
 
   def search
@@ -71,12 +66,13 @@ class ProductsController < ApplicationController
     render :index
   end
 
-# Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   private
     # This method is used to set the @product instance variable for the show, edit, update, and destroy actions.
-      # It finds the product by its ID and assigns it to the @product instance variable.
-      # The find method raises an ActiveRecord::RecordNotFound exception if the record is not found.
+    # It finds the product by its ID and assigns it to the @product instance variable.
+    # The find method raises an ActiveRecord::RecordNotFound exception if the record is not found.
     def set_product
+Rails.logger.debug { "set_product called with params[:id]: #{params[:id]}" }
       @product = Product.find(params[:id])
     end
 
@@ -89,4 +85,7 @@ class ProductsController < ApplicationController
       params.expect(product: [ :name ])
     end
 
+    def render_not_found
+      render file: Rails.root.join("public", "404.html"), status: :not_found, layout: false
+    end
 end
